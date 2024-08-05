@@ -31,13 +31,20 @@
 				})
 				.to('#background', {
 					backgroundPosition: '300% 200%',
-					duration: 3,
+					duration: 4,
 					ease: 'linear'
 				})
 				.to('#background', {
 					backgroundPosition: '0% 0%',
 					duration: 0
 				});
+			gsap.from('#animated-svg', {
+				scale: 1.5,
+				duration: 5,
+				repeat: -1,
+				yoyo: true,
+				ease: 'linear'
+			});
 		});
 	});
 
@@ -87,7 +94,7 @@
 			case 'Snow':
 				return 'images/snow.png';
 			default:
-				return 'images/clouds.png'; // Fallback image
+				return 'images/clouds.png';
 		}
 	}
 </script>
@@ -97,10 +104,18 @@
 		id="background"
 		class="w-[90%] max-w-[470px] backdrop-blur-[20px] bg-cover bg-left bg-no-repeat mx-auto text-[#fff] rounded-[20px] py-[40px] px-[35px] text-center"
 	>
-		<div class="w-full flex justify-evenly sm:justify-between items-center">
+		<div class="w-full flex justify-evenly sm:justify-between items-center gap-3">
+			<button>
+				<img
+					id="animated-svg"
+					class="w-[15px] sm:w-[30px] fill-white"
+					src="images/location.svg"
+					alt="location icon"
+				/>
+			</button>
 			<input
 				bind:value={city}
-				class="border-none outline-none bg-[#ebfffc] text-[#000] py-[5px] px-[15px] sm:py-[10px] sm:px-[25px] h-[30px] sm:h-[60px] rounded-[30px] sm:flex-1 mr-[16px] text-[12px] sm:text-[18px] z-50"
+				class="border-none outline-none bg-[#ebfffc] text-[#000] py-[5px] px-[15px] sm:py-[10px] sm:px-[25px] h-[30px] sm:h-[60px] rounded-[30px] flex-1 text-[12px] sm:text-[18px] z-50"
 				placeholder="Enter city name"
 				spellcheck="false"
 				on:keydown={handleKeyDown}
@@ -110,7 +125,7 @@
 				on:click={searchWeather}
 				aria-label="Search"
 			>
-				<img class="w-[16px]" src="images/search.png" alt="search icon" />
+				<img class="w-[15px]" src="images/search.png" alt="search icon" />
 			</button>
 		</div>
 
@@ -127,9 +142,10 @@
 					src={getWeatherIcon(weatherData.weather[0].main)}
 					alt="weather icon"
 				/>
-				<p>{weatherData.weather[0].description}</p>
+				<p></p>
 				<h1 class="text-[80px] capitalize">{weatherData.main.temp}°C</h1>
 				<h2 class="text-[45px] capitalize">{weatherData.name}</h2>
+
 				<div class="w-[100%] flex items-center justify-evenly sm:justify-between mt-[50px]">
 					<div class="flex items-center text-left">
 						<img
