@@ -127,6 +127,7 @@
 					src={getWeatherIcon(weatherData.weather[0].main)}
 					alt="weather icon"
 				/>
+				<p>{weatherData.weather[0].description}</p>
 				<h1 class="text-[80px] capitalize">{weatherData.main.temp}°C</h1>
 				<h2 class="text-[45px] capitalize">{weatherData.name}</h2>
 				<div class="w-[100%] flex items-center justify-evenly sm:justify-between mt-[50px]">
