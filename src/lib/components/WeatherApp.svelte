@@ -7,22 +7,37 @@
 	let weatherData = null;
 	let error = null;
 	let fetchWeather = false;
+	let weatherIcons = [];
 
-	// GSAP
+	// GSAP animation for the background
 	onMount(() => {
-		const tl = gsap.timeline({
-			repeat: -1,
-			yoyo: true
-		});
+		// Get all weather icons
+		weatherIcons = [
+			getWeatherIcon('Clear'),
+			getWeatherIcon('Clouds'),
+			getWeatherIcon('Drizzle'),
+			getWeatherIcon('Mist'),
+			getWeatherIcon('Rain'),
+			getWeatherIcon('Snow'),
+			getWeatherIcon('Default')
+		];
 
-		tl.to('#background', {
-			backgroundPosition: '400% 400%',
-			duration: 1,
-			ease: 'none'
-		}).to('#background', {
-			backgroundImage: 'linear-gradient(135deg, #00feba, #97ea7b ,#00fsba)',
-			duration: 10,
-			ease: 'none'
+		const timeline = gsap.timeline({ repeat: -1 });
+
+		weatherIcons.forEach((icon) => {
+			timeline
+				.set('#background', {
+					backgroundImage: `url(${icon})`
+				})
+				.to('#background', {
+					backgroundPosition: '300% 200%',
+					duration: 3,
+					ease: 'linear'
+				})
+				.to('#background', {
+					backgroundPosition: '0% 0%',
+					duration: 0
+				});
 		});
 	});
 
@@ -80,12 +95,12 @@
 <main class="h-[100vh] w-[100vw] bg-black text-black pt-[20%]" id="main">
 	<div
 		id="background"
-		class="w-[90%] max-w-[470px] bg-gradient-to-tr from-[#00feba] to-[#97ea7b] mx-auto text-[#000] rounded-[20px] py-[40px] px-[35px] text-center"
+		class="w-[90%] max-w-[470px] backdrop-blur-[20px] bg-cover bg-left bg-no-repeat mx-auto text-[#fff] rounded-[20px] py-[40px] px-[35px] text-center"
 	>
 		<div class="w-full flex justify-evenly sm:justify-between items-center">
 			<input
 				bind:value={city}
-				class="border-none outline-none bg-[#ebfffc] text-[#000] py-[5px] px-[15px] sm:py-[10px] sm:px-[25px] h-[30px] sm:h-[60px] rounded-[30px] sm:flex-1 mr-[16px] text-[12px] sm:text-[18px]"
+				class="border-none outline-none bg-[#ebfffc] text-[#000] py-[5px] px-[15px] sm:py-[10px] sm:px-[25px] h-[30px] sm:h-[60px] rounded-[30px] sm:flex-1 mr-[16px] text-[12px] sm:text-[18px] z-50"
 				placeholder="Enter city name"
 				spellcheck="false"
 				on:keydown={handleKeyDown}
@@ -140,3 +155,30 @@
 		{/if}
 	</div>
 </main>
+
+<style>
+	#background {
+		position: relative;
+		background-size: cover;
+		background-position: left top;
+		background-repeat: no-repeat;
+		overflow: hidden;
+	}
+
+	#background::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
+		z-index: 1;
+		pointer-events: none; /* Ensures the filter doesn't block clicks */
+	}
+
+	#background > * {
+		position: relative;
+		z-index: 2; /* Ensures content is above the dark filter */
+	}
+</style>
