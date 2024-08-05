@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
 	import gsap from 'gsap';
 	import WeatherApi from './WeatherApi.svelte';
@@ -9,7 +9,6 @@
 	let fetchWeather = false;
 
 	// GSAP
-
 	onMount(() => {
 		const tl = gsap.timeline({
 			repeat: -1,
@@ -94,8 +93,9 @@
 			<button
 				class="border-none outline-none bg-[#ebfffc] rounded-[50%] w-[30px] h-[30px] sm:w-[60px] sm:h-[60px] cursor-pointer flex justify-center items-center"
 				on:click={searchWeather}
+				aria-label="Search"
 			>
-				<img class="w-[16px]" src="images/search.png" alt="search" />
+				<img class="w-[16px]" src="images/search.png" alt="search icon" />
 			</button>
 		</div>
 
@@ -116,14 +116,18 @@
 				<h2 class="text-[45px] capitalize">{weatherData.name}</h2>
 				<div class="w-[100%] flex items-center justify-evenly sm:justify-between mt-[50px]">
 					<div class="flex items-center text-left">
-						<img class="w-[20px] sm:w-[40px] mr-[10px]" src="images/humidity.png" alt="humidity" />
+						<img
+							class="w-[20px] sm:w-[40px] mr-[10px]"
+							src="images/humidity.png"
+							alt="humidity icon"
+						/>
 						<div>
 							<p class="text-[13px] sm:text-[28px]">{weatherData.main.humidity}%</p>
 							<p class="text-[13px] sm:text-[28px] capitalize">Humidity</p>
 						</div>
 					</div>
 					<div class="flex items-center text-left">
-						<img class="w-[20px] sm:w-[40px] mr-[10px]" src="images/wind.png" alt="wind" />
+						<img class="w-[20px] sm:w-[40px] mr-[10px]" src="images/wind.png" alt="wind icon" />
 						<div>
 							<p class="text-[13px] sm:text-[28px]">{weatherData.wind.speed} km/h</p>
 							<p class="text-[13px] sm:text-[28px] capitalize">Wind Speed</p>
