@@ -1,2 +1,8 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import WeatherApp from '../lib/components/WeatherApp.svelte';
+	import WeatherApi from '../lib/components/WeatherApi.svelte';
+</script>
+
+<WeatherApp />
+
+<WeatherApi />
