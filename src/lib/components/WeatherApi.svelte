@@ -19,10 +19,10 @@
 					throw new Error('City not found');
 				}
 				const data = await response.json();
-				console.log('Weather data:', data); // Log the data to the console
+				console.log('Weather data:', data);
 				onWeatherData(data);
 			} catch (err) {
-				console.error('Error fetching weather data:', err); // Log the error to the console
+				console.error('Error fetching weather data:', err);
 				onError(err.message);
 			}
 		}
