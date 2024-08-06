@@ -23,7 +23,6 @@
 
 		imageStore.generateImages(weatherIcons);
 
-		// Subscribe to the image store
 		imageStore.subscribe((data) => {
 			images = data;
 		});
@@ -83,7 +82,7 @@
 <main class="h-[100vh] w-[100vw] bg-black text-black pt-[20%]" id="main">
 	<div
 		id="background"
-		class="relative w-[90%] max-w-[470px] backdrop-blur-[20px] bg-cover bg-left bg-no-repeat mx-auto text-[#fff] rounded-[20px] py-[40px] px-[35px] text-center overflow-hidden bg-orange-500"
+		class="relative w-[90%] max-w-[470px] backdrop-blur-[200px] bg-cover bg-left bg-no-repeat mx-auto text-[#000] rounded-[20px] py-[40px] px-[35px] text-center overflow-hidden bg-orange-500"
 	>
 		{#each images as img}
 			<div
@@ -178,6 +177,7 @@
 		background-size: cover;
 		background-position: center;
 		animation: moveFromLeftToRight linear infinite;
+		z-index: -99999;
 	}
 
 	@keyframes moveFromLeftToRight {

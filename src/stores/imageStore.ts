@@ -16,14 +16,14 @@ const createImageStore = () => {
 		subscribe,
 		generateImages: (icons: string[]) => {
 			const images: ImageData[] = [];
-			for (let i = 0; i < 20; i++) {
+			for (let i = 0; i < 7; i++) {
 				images.push({
 					src: icons[i % icons.length],
-					width: Math.random() * 50 + 20,
-					height: Math.random() * 50 + 20,
+					width: Math.random() * 50 + 10,
+					height: Math.random() * 50 + 10,
 					top: Math.random() * 100,
 					left: Math.random() * 100,
-					duration: Math.random() * 10 + 5
+					duration: Math.random() * 10 + 10
 				});
 			}
 			set(images);
