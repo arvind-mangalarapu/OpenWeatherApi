@@ -109,6 +109,7 @@
 			</button>
 			<input
 				bind:value={city}
+				type="search"
 				class="border-none outline-none bg-[#ebfffc] text-[#000] py-[5px] px-[15px] sm:py-[10px] sm:px-[25px] h-[30px] sm:h-[60px] rounded-[30px] flex-1 text-[12px] sm:text-[18px] z-50"
 				placeholder="Enter city name"
 				spellcheck="false"
