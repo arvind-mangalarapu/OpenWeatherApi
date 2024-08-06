@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import gsap from 'gsap';
+	import { imageStore } from '../../stores/imageStore';
 	import WeatherApi from './WeatherApi.svelte';
 
 	let city = '';
@@ -8,10 +8,9 @@
 	let error = null;
 	let fetchWeather = false;
 	let weatherIcons = [];
+	let images = [];
 
-	// GSAP animation for the background
 	onMount(() => {
-		// Get all weather icons
 		weatherIcons = [
 			getWeatherIcon('Clear'),
 			getWeatherIcon('Clouds'),
@@ -22,29 +21,11 @@
 			getWeatherIcon('Default')
 		];
 
-		const timeline = gsap.timeline({ repeat: -1 });
+		imageStore.generateImages(weatherIcons);
 
-		weatherIcons.forEach((icon) => {
-			timeline
-				.set('#background', {
-					backgroundImage: `url(${icon})`
-				})
-				.to('#background', {
-					backgroundPosition: '300% 200%',
-					duration: 4,
-					ease: 'linear'
-				})
-				.to('#background', {
-					backgroundPosition: '0% 0%',
-					duration: 0
-				});
-			gsap.from('#animated-svg', {
-				scale: 1.5,
-				duration: 5,
-				repeat: -1,
-				yoyo: true,
-				ease: 'linear'
-			});
+		// Subscribe to the image store
+		imageStore.subscribe((data) => {
+			images = data;
 		});
 	});
 
@@ -102,8 +83,22 @@
 <main class="h-[100vh] w-[100vw] bg-black text-black pt-[20%]" id="main">
 	<div
 		id="background"
-		class="w-[90%] max-w-[470px] backdrop-blur-[20px] bg-cover bg-left bg-no-repeat mx-auto text-[#fff] rounded-[20px] py-[40px] px-[35px] text-center"
+		class="relative w-[90%] max-w-[470px] backdrop-blur-[20px] bg-cover bg-left bg-no-repeat mx-auto text-[#fff] rounded-[20px] py-[40px] px-[35px] text-center overflow-hidden bg-orange-500"
 	>
+		{#each images as img}
+			<div
+				class="background-image"
+				style="
+					background-image: url({img.src});
+					width: {img.width}px;
+					height: {img.height}px;
+					top: {img.top}%;
+					left: {img.left}%;
+					animation-duration: {img.duration}s;
+				"
+			></div>
+		{/each}
+
 		<div class="w-full flex justify-evenly sm:justify-between items-center gap-3">
 			<button>
 				<img
@@ -168,7 +163,7 @@
 				</div>
 			</div>
 		{:else}
-			<p class="capitalize mt-5 text-center">Enter a city name to get the weather.</p>
+			<p class="capitalize mt-5 text-center z-50">Enter a city name to get the weather.</p>
 		{/if}
 	</div>
 </main>
@@ -176,26 +171,21 @@
 <style>
 	#background {
 		position: relative;
-		background-size: cover;
-		background-position: left top;
-		background-repeat: no-repeat;
-		overflow: hidden;
 	}
 
-	#background::before {
-		content: '';
+	.background-image {
 		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
-		z-index: 1;
-		pointer-events: none; /* Ensures the filter doesn't block clicks */
+		background-size: cover;
+		background-position: center;
+		animation: moveFromLeftToRight linear infinite;
 	}
 
-	#background > * {
-		position: relative;
-		z-index: 2; /* Ensures content is above the dark filter */
+	@keyframes moveFromLeftToRight {
+		0% {
+			transform: translateX(-100%);
+		}
+		100% {
+			transform: translateX(100%);
+		}
 	}
 </style>
