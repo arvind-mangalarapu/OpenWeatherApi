@@ -93,6 +93,7 @@
 					height: {img.height}px;
 					top: {img.top}%;
 					left: {img.left}%;
+					object-fit: {img.objectFit};
 					animation-duration: {img.duration}s;
 				"
 			></div>
@@ -102,7 +103,7 @@
 			<button>
 				<img
 					id="animated-svg"
-					class="w-[15px] sm:w-[30px] fill-white"
+					class="w-[15px] sm:w-[30px]"
 					src="images/location.svg"
 					alt="location icon"
 				/>
